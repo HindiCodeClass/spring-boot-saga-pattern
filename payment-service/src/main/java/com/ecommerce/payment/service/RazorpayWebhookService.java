@@ -29,10 +29,14 @@ public class RazorpayWebhookService {
 		private String webhookSecret;
 		
 		public void processWebhook(String signature, String payload) {
+			System.out.println("========== RAZORPAY WEBHOOK ==========");
+		    System.out.println("Signature: " + signature);
+		    System.out.println("Complete Payload: " + payload);
+
 			verifySignature(signature,payload);
 			JSONObject event = new JSONObject(payload);
 			String eventType = event.getString("event");
-			log.info("Received RazorpayWebhook event ", eventType);
+			log.info("Received RazorpayWebhook event {}", eventType);
 			
 			switch (eventType) {
 			case "payment.captured" -> handlePaymentSuccess(event);
